@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="Scripts/angular.js"></script>
+    <script src="Scripts/angular-animate.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script>
+    <script src="Scripts/angular-ui/ui-bootstrap.js"></script>
+    <script src="Scripts/angular-ui/ui-bootstrap-tpls.js"></script>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <script src="Scripts/jquery-1.9.1.js"></script>
+    <script src="Scripts/app.js"></script>
+    <script src="Scripts/searchController.js"></script>
+    <link href="Content/Site.css" rel="stylesheet" />
+</head>
+
+
+<body>
+    <form id="form1">
+        <div class="container-fluid" ng-app="foodApp" novalidate ng-controller="SearchFoodController">
+            <div class="container">
+                <div class="row no-padding top-buffer">
+                    <div class="col-xs-12 text-center">
+                        <div class="col-xs-2">
+                            Search Food Group
+                        </div>
+                        <div class="col-xs-3">
+                            <select ng-model="searchFoodForm.selectedFoodID" class="form-control"
+                                id="ddlFoodGroups" name="ddlFoodGroups" required
+                                ng-options="item.id as item.name for item in selectedGroups" ng-change="getFoodItems(searchFoodForm.selectedFoodID)">
+                            </select>
+                        </div>
+                        <div class="col-xs-2">
+                            Search Food Item
+                        </div>
+                        <div class="col-xs-3">
+                            <select ng-model="searchFoodForm.selectedFoodItemID" class="form-control"
+                                id="ddlFoodItems" name="ddlFoodItems" required
+                                ng-options="item.ndbno as item.name for item in selectedFoodItem">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 text-center">
+                        <button class="btn btn-primary" type="button" ng-click="searchFoodItem(searchFoodForm.selectedFoodItemID)">Search</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="col-xs-2 ">Name</div>
+                        <div class="col-xs-10 text-left">{{foodItemDetails.name}}</div>
+                    </div>
+                </div>
+                <div class="row padding-top-10">
+                    <div class="col-xs-12">
+                        <div class="col-xs-2">Group</div>
+                        <div class="col-xs-10 text-left">{{foodItemDetails.fg}}</div>
+                    </div>
+                </div>
+                <div class="row padding-top-10">
+                    <div class="col-xs-12">
+                        <div class="col-xs-2">Nutrients Details</div>
+                        <div class="col-xs-10 text-left"></div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-12">
+                        <div class="col-xs-2"></div>
+                        <div class="col-xs-2 headerColor">Name</div>
+                        <div class="col-xs-2 headerColor">Group</div>
+                        <div class="col-xs-2 headerColor">Unit</div>
+                        <div class="col-xs-2 headerColor">Value</div>
+                        <div class="col-xs-2 headerColor">View item</div>
+                    </div>
+                    <div class="col-xs-12" ng-repeat="nutrients in foodItemDetails.nutrients" ng-class="{even: 'even', odd: 'odd'}">
+                        <div class="col-xs-2"></div>
+                        <div class="col-xs-2">{{nutrients.name}}</div>
+                        <div class="col-xs-2">{{nutrients.group}}</div>
+                        <div class="col-xs-2">{{nutrients.unit}}</div>
+                        <div class="col-xs-2">{{nutrients.value}}</div>
+                        <div class="col-xs-2">
+                            <a href="#" ng-click="viewDetails(nutrients)">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <script type="text/ng-template" id="myModalContent.html">
+
+                    <div class="col-lg-12 modal-content">
+
+                        <div class="modal-header">
+                            <h3 class="modal-title">View details</h3>
+                        </div>
+                        <div class="modal-body row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <p>
+             <div class="row">
+                    <div class="col-xs-12">
+                        <div class="col-xs-2 ">Name</div>
+                        <div class="col-xs-10 text-left">{{viewItemDetails.name}}</div>
+                    </div>
+                </div>
+                <div class="row padding-top-10">
+                    <div class="col-xs-12">
+                        <div class="col-xs-2">Group</div>
+                        <div class="col-xs-10 text-left">{{viewItemDetails.group}}</div>
+                    </div>
+                </div>
+                <div class="row padding-top-10">
+                    <div class="col-xs-12">
+                        <div class="col-xs-2">Unit</div>
+                        <div class="col-xs-10 text-left">{{viewItemDetails.unit}}</div>
+                    </div>
+                </div>
+             <div class="row padding-top-10">
+                    <div class="col-xs-12">
+                        <div class="col-xs-2">Value</div>
+                        <div class="col-xs-10 text-left">{{viewItemDetails.value}}</div>
+                    </div>
+                </div>
+                              
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                           
+                            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                        </div>
+                    </div>
+
+            </script>
+    </form>
+</body>
+</html>
